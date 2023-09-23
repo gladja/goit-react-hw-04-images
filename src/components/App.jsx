@@ -19,9 +19,8 @@ export const App = () => {
   const [largeImageURL, setLargeImageURL] = useState();
 
   useEffect(() => {
-    formSubmit();
-  }, [search, page]);
-
+    search && formSubmit();
+  }, [search, page, ]);
 
   const formSubmit = async () => {
     if (search !== '') {

@@ -5,13 +5,12 @@ export const Modal = ({ toggleModal, largeImageURL }) => {
 
   useEffect(()=> {
     window.addEventListener('keydown', handleKeyDown);
-  }, [])
 
-  useEffect(()=> {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     }
-  }, [])
+  }, [toggleModal])
+
 
  const handleKeyDown = e => {
     if (e.code === 'Escape') {
