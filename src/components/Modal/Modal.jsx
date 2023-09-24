@@ -3,25 +3,23 @@ import { useEffect } from 'react';
 
 export const Modal = ({ toggleModal, largeImageURL }) => {
 
+
   useEffect(()=> {
+
+ const handleKeyDown = e => {
+    if (e.code === 'Escape') toggleModal();
+  };
+
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     }
+
   }, [toggleModal])
 
-
- const handleKeyDown = e => {
-    if (e.code === 'Escape') {
-      toggleModal();
-    }
-  };
-
   const handleBackdropClick = e => {
-    if (e.target === e.currentTarget) {
-    toggleModal();
-    }
+    if (e.target === e.currentTarget) toggleModal();
   };
 
   return (

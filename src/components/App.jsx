@@ -19,27 +19,31 @@ export const App = () => {
   const [largeImageURL, setLargeImageURL] = useState();
 
   useEffect(() => {
-    search && formSubmit();
-  }, [search, page, ]);
+    // if (!search) return;
 
-  const formSubmit = async () => {
-    if (search !== '') {
+    const formSubmit = async () => {
+      if (search !== '') {
 
-      setLoading(true);
+        setLoading(true);
 
-      try {
-        const data = await getSearchImage(search, page);
-        setHits([...hits, ...data.hits]);
-        setTotal(data.total);
+        try {
+          const data = await getSearchImage(search, page);
 
-        searchFailed(data);
-      } catch (error) {
-        toast.error('Sorry ERROR. Please try again.');
-      } finally {
-        setLoading(false);
+          setHits(prev => [...prev, ...data.hits]);
+          setTotal(data.total);
+
+          searchFailed(data);
+        } catch (error) {
+          toast.error('Sorry ERROR. Please try again.');
+        } finally {
+          setLoading(false);
+        }
       }
-    }
-  };
+    };
+
+    formSubmit();
+  }, [page, search]);
+
 
   const searchFailed = ({ total }) => {
     if (total === 0) {
@@ -49,15 +53,15 @@ export const App = () => {
 
   const handleFormSubmit = () => {
     setPage(1);
-    setHits([])
+    setHits([]);
   };
 
   const btnLoadMorePage = () => {
-    setPage(prev => prev + 1)
+    setPage(prev => prev + 1);
   };
 
   const toggleModal = () => {
-    setShowModal(prev => !prev)
+    setShowModal(prev => !prev);
   };
 
   const onClickImage = e => {
@@ -73,7 +77,7 @@ export const App = () => {
         setSearch={setSearch}
         handleFormSubmit={handleFormSubmit}
       />
-      <ImageGallery hits={hits} onClickImage={onClickImage}/>
+      <ImageGallery hits={hits} onClickImage={onClickImage} />
       <Loader loading={loading} />
       {total >= 12 && <Button handleLoadMore={btnLoadMorePage} />}
 
