@@ -13,11 +13,9 @@ export const Searchbar = ({ search, setSearch, handleFormSubmit }) => {
       return toast.warn('Sorry, type search query. Please try again.');
     }
 
-    // if(query === search) {
-    //   console.log('query', query);
-    //   console.log('search', search);
-    //   setSearch('');
-    // }
+    if(query === search) {
+      return toast.warn('Sorry! double search query. Please try again.');
+    }
 
     setSearch(query);
     setQuery('');
